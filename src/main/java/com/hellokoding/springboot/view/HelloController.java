@@ -42,12 +42,11 @@ public class HelloController {
     }
 
     @PostMapping({"/", "/book"})
-    public void hello(HttpServletResponse httpServletResponse, @RequestParam(value="id", required=true) int id,
+    public void hello(HttpServletResponse httpServletResponse,
                       @RequestParam(value="title", required=true) String title) {
         EntityManager em = emc.create();
 
         Book book = new Book();
-        book.setId((long)id);
         book.setTitle(title);
 
         em.persist(book);
