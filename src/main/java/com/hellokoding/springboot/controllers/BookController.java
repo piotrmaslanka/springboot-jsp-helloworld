@@ -29,7 +29,7 @@ public class BookController {
     }
 
     @GetMapping({"/book/{id}"})
-    public ResponseEntity<Book> getSingleBook(int id) {
+    public ResponseEntity<Book> getSingleBook(@PathVariable(value = "id") int id) {
 
         EntityManager em = emc.create();
 
@@ -40,10 +40,10 @@ public class BookController {
         return new ResponseEntity<>(output, HttpStatus.OK);
     }
 
-    @PatchMapping({"/book"})
+    @PatchMapping({"/book/{id}"})
     @ResponseStatus(value = HttpStatus.OK)
-    public void updateBook(@RequestParam(value = "id", required = true) int id,
-                           @RequestParam(value = "new_title", required = true) String new_title) {
+    public void updateBook(@PathVariable(value = "id") int id,
+                           @RequestParam(value = "title", required = true) String new_title) {
         EntityManager em = emc.create();
 
         Book output = em.find(Book.class, id);
@@ -52,9 +52,9 @@ public class BookController {
         emc.close(em);
     }
 
-    @DeleteMapping({"/book"})
+    @DeleteMapping({"/book/{id}"})
     @ResponseStatus(value = HttpStatus.OK)
-    public void deleteBook(@RequestParam(value = "id", required = true) int id) {
+    public void deleteBook(@PathVariable(value = "id") int id) {
         EntityManager em = emc.create();
 
         Book book = new Book();

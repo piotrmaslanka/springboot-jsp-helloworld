@@ -34,11 +34,8 @@ function on_submit(e) {
 
 function kill(id) {
     $.ajax({
-        url: '/book',
+        url: '/book/'+id,
         type: 'DELETE',
-        data: {
-            id: id
-        },
         success: function () {
             $("#book" + id).remove();
         }
