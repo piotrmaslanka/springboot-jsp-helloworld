@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
@@ -29,7 +30,8 @@ public class BookController {
     }
 
     @GetMapping({"/book/{id}"})
-    public ResponseEntity<Book> getSingleBook(@PathVariable(value = "id") int id) {
+    public String getSingleBook(Model model,
+                                              @PathVariable(value = "id") int id) {
 
         EntityManager em = emc.create();
 
@@ -37,7 +39,9 @@ public class BookController {
 
         emc.close(em);
 
-        return new ResponseEntity<>(output, HttpStatus.OK);
+        model.addAttribute("book", output);
+
+        return "book";
     }
 
     @PatchMapping({"/book/{id}"})
