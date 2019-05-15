@@ -1,13 +1,12 @@
 package com.hellokoding.springboot.view;
 
 import com.hellokoding.springboot.db.Book;
-import com.hellokoding.springboot.db.EntityManagerCreator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletResponse;
@@ -32,9 +31,20 @@ public class HelloController {
         return "hello";
     }
 
+    @DeleteMapping({"/", "/book"})
+    @ResponseStatus(value = HttpStatus.OK)
+    public void hello3(@RequestParam(value="id", required=true) int id) {
+        EntityManager em = emc.create();
+
+        Book book = new Book();
+        book.setId(id);
+        em.remove(em.merge(book));
+
+        emc.close(em);
+    }
+
     @PostMapping({"/", "/book"})
-    public void hello(HttpServletResponse httpServletResponse,
-                      @RequestParam(value="title", required=true) String title) {
+    public ResponseEntity<Book> hello(@RequestParam(value="title", required=true) String title) {
         EntityManager em = emc.create();
 
         Book book = new Book();
@@ -44,6 +54,6 @@ public class HelloController {
 
         emc.close(em);
 
-        httpServletResponse.setStatus(200);
+        return new ResponseEntity<>(book, HttpStatus.OK);
     }
 }

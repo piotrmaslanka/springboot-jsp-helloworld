@@ -1,4 +1,4 @@
-package com.hellokoding.springboot.db;
+package com.hellokoding.springboot.view;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;

@@ -9,26 +9,47 @@
     <link rel='stylesheet' href='/webjars/bootstrap/css/bootstrap.min.css'>
     <script src="/webjars/jquery/2.1.4/jquery.min.js"></script>
     <script type="text/javascript">
-        function on_submit() {
-            $.post('/book', {
-                'title': $("#form_title").val
-            }, function() {
-                $("<div>"
+        function on_submit(e) {
+            $.post("/book", {
+                'title': $("#form_title").val()
+            }, function(data) {
+                $('#books').append(
+                    $('<div id="book'+data.id+'">'+data.id+' - '+data.title+' <a href="javascript:kill('+data.id+'")>Kasuj</a></div>')
+                );
+            });
+            e.preventDefault();
+        }
+        function kill(id) {
+            $.ajax({
+                url: '/book',
+                type: 'DELETE',
+                data: {
+                    id: id
+                },
+                success: function() {
+                    $("#book"+id).remove();
+                }
             });
         }
+
     </script>
 </head>
 <body>
     <h2 class="hello-title">Hello ${name}!</h2>
     <div id="books">
         <c:forEach items="${books}" var="book">
-            ${book.getId()} - ${book.getTitle()}<br>
+            <div id="book${book.getId()}">${book.getId()} - ${book.getTitle()}
+            <a href="javascript:kill(${book.getId()})">Kasuj</a>
+            </div>
         </c:forEach>
     </div>
     <br>
-    <form action="/book" method="POST">
+    <form id="form">
         <label for="title">Tytuł: </label><input type="text" name="title" id="form_title"><br>
-        <input type="submit">
+        <input type="submit" value="Dodaj">
     <script src="/js/main.js"></script>
+    <script>
+        $('#form').submit(on_submit);
+    </script>
 </body>
 </html>
