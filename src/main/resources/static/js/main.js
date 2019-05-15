@@ -1,7 +1,12 @@
 function addbook_data(data) {
-    $('#books').append(
-        $('<div id="book'+data.id+'">'+data.id+' - '+data.title+' <a href="javascript:kill('+data.id+'")>Kasuj</a></div>')
-    );
+    let a = $('<a>Kasuj</a>');
+    a.click(function () {
+        kill(data.id)
+    });
+    let div = $('<div id="book' + data.id + '">' + data.id + ' - ' + data.title + '</div>');
+    div.append(" ");
+    div.append(a);
+    $('#books').append(div);
 }
 
 function load_all_books() {
@@ -9,7 +14,7 @@ function load_all_books() {
     $.ajax({
         url: '/book',
         type: 'GET',
-        success: function(data) {
+        success: function (data) {
             data.forEach(addbook_data);
         }
     });
@@ -34,13 +39,13 @@ function kill(id) {
         data: {
             id: id
         },
-        success: function() {
-            $("#book"+id).remove();
+        success: function () {
+            $("#book" + id).remove();
         }
     });
 }
 
-$(function() {
+$(function () {
     $('#form').submit(on_submit);
     load_all_books();
 });

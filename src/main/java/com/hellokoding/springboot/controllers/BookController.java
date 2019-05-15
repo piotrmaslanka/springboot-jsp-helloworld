@@ -41,9 +41,9 @@ public class BookController {
     }
 
     @PatchMapping({"/book"})
-    @ResponseStatus(value=HttpStatus.OK)
-    public void updateBook(@RequestParam(value="id", required=true) int id,
-                           @RequestParam(value="new_title", required=true) String new_title) {
+    @ResponseStatus(value = HttpStatus.OK)
+    public void updateBook(@RequestParam(value = "id", required = true) int id,
+                           @RequestParam(value = "new_title", required = true) String new_title) {
         EntityManager em = emc.create();
 
         Book output = em.find(Book.class, id);
@@ -53,8 +53,8 @@ public class BookController {
     }
 
     @DeleteMapping({"/book"})
-    @ResponseStatus(value=HttpStatus.OK)
-    public void deleteBook(@RequestParam(value="id", required=true) int id) {
+    @ResponseStatus(value = HttpStatus.OK)
+    public void deleteBook(@RequestParam(value = "id", required = true) int id) {
         EntityManager em = emc.create();
 
         Book book = new Book();
@@ -65,7 +65,7 @@ public class BookController {
     }
 
     @PutMapping({"/book"})
-    public ResponseEntity<Book> addBook(@RequestParam(value="title", required=true) String title) {
+    public ResponseEntity<Book> addBook(@RequestParam(value = "title", required = true) String title) {
         EntityManager em = emc.create();
 
         Book book = new Book();

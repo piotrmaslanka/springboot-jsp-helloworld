@@ -11,7 +11,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 @Repository
-@Scope(value="singleton", proxyMode = ScopedProxyMode.TARGET_CLASS)
+@Scope(value = "singleton", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class EntityManagerCreator {
 
     EntityManagerFactory emf;
